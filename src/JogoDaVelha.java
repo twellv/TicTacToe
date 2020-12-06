@@ -1,11 +1,12 @@
 import java.util.Scanner;
 
-public class JogoDaVelha {
+public class JogoDaVelha extends Validacao{
     Scanner teclado = new Scanner(System.in);
     String jogador1;
     String jogador2;
+    String jogadaRecebida;
 
-    private String[][] m = { {"1","2","3"}, {"4","5","6"},{"7","8","9"} };
+    private String[][] matriz = { {"1","2","3"}, {"4","5","6"},{"7","8","9"} };
 
         public String mostrar(){
 
@@ -13,7 +14,7 @@ public class JogoDaVelha {
                 for(int coluna = 0; coluna < 3; coluna++){
 
                     System.out.printf("|");
-                    System.out.printf(m[linha][coluna]);
+                    System.out.printf(matriz[linha][coluna]);
 
                 } System.out.printf("|");
                 System.out.println("\n" + "-------");
@@ -32,7 +33,7 @@ public class JogoDaVelha {
           jogador1 = "O";
           jogador2 = "X";
       } else{
-          System.out.println("JOGADA INVALIDA!");
+          System.out.println("ESCOLHA INVALIDA!");
           escolhaJogador();
       }
     }
@@ -43,12 +44,13 @@ public class JogoDaVelha {
             for(int i = 1; i < 3; i++){
 
                 do{
-                    jogador01FazJogada();
+                    jogador02FazJogada();
                     validar();
                     mostrar();
 
 
-                    jogador02FazJogada();
+
+                    jogador01FazJogada();
                     validar();
                     mostrar();
 
@@ -57,34 +59,71 @@ public class JogoDaVelha {
         }
 //----------------------------------------------------------
 
+public Boolean permitirJogada(){
+
+    int jogadaInteira = Integer.parseInt(jogadaRecebida);
+
+    if(jogadaInteira > 0 && jogadaInteira < 10){
+        return true;
+    } else return false;
+
+}
+
+//----------------------------------------------------------
 public void jogador01FazJogada(){
 
     System.out.println("JOGADOR 01 Faça sua jogada: ");
-    String jogada = teclado.nextLine();
-    System.out.println("JOGADOR 01 Jogou na casa numero: " + " " + jogada);
+    jogadaRecebida = teclado.nextLine();
+    permitirJogada();
+    System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
 
-    for (int co = 0; co < 3 ; co++){
-        for (int li = 0; li < 3; li++){
-            if (jogada.equals(m[li][co])){
-                m[li][co] = jogador1;
+    if(permitirJogada()){
+
+        System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
+
+        for (int co = 0; co < 3 ; co++){
+            for (int li = 0; li < 3; li++){
+                System.out.println(li);
+
+                if (jogadaRecebida.equals(matriz[li][co])){
+                    System.out.println(co +"COLUNA " +li+ " LINHA");
+                    matriz[li][co] = jogador1;
+                    System.out.println(co +"COLUNA " +li+ " LINHA");
+                }else{
+                    System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
+                    System.out.println("Ainda não deu certo, tenta de novo!!");
+                    //jogador01FazJogada();
+                }
+
+
             }
         }
+
+
+
+    } else{
+        System.out.println("Ta errado, joga isso direito ¬¬ ");
+        jogador01FazJogada();
     }
+System.out.println("JOGADOR 01 Jogou na casa numero: " + " " + "46 A ");
 }
 //----------------------------------------------------------
 public void jogador02FazJogada(){
 
     System.out.println("JOGADOR 02 Faça sua jogada: ");
     String jogada = teclado.nextLine();
-    System.out.println("JOGADOR 02 Jogou na casa numero: " + " " + jogada);
 
     for (int co = 0; co < 3 ; co++){
         for (int li = 0; li < 3; li++){
-            if (jogada.equals(m[li][co])){
-                m[li][co] = jogador2;
+
+            if (jogada.equals(matriz[li][co])){
+                matriz[li][co] = jogador2;
+            } else{
+                System.out.println("Deu ruim.");
             }
         }
     }
+    System.out.println("JOGADOR 02 Jogou na casa numero: " + " " + jogada);
 }
 //----------------------------------------------------------
 
@@ -101,25 +140,25 @@ public void jogador02FazJogada(){
         public boolean vencedor01(){
 
 
-            if(m[0][0] == "X" && m[0][1] == "X" && m[0][2] == "X"){
+            if(matriz[0][0] == "X" && matriz[0][1] == "X" && matriz[0][2] == "X"){
                 condVitoria01 = true;
-            } else if(m[1][0] == "X" && m[1][1] == "X" && m[1][2] == "X"){
+            } else if(matriz[1][0] == "X" && matriz[1][1] == "X" && matriz[1][2] == "X"){
                 condVitoria01 = true;
-            } else if(m[2][0] == "X" && m[2][1] == "X" && m[2][2] == "X"){
-                condVitoria01 = true;
-
-
-            } else if(m[0][0] == "X" && m[1][0] == "X" && m[2][0] == "X"){
-                condVitoria01 = true;
-            } else if(m[0][1] == "X" && m[1][1] == "X" && m[2][1] == "X"){
-                condVitoria01 = true;
-            } else if(m[0][2] == "X" && m[1][2] == "X" && m[2][2] == "X"){
+            } else if(matriz[2][0] == "X" && matriz[2][1] == "X" && matriz[2][2] == "X"){
                 condVitoria01 = true;
 
 
-            } else if(m[0][0] == "X" && m[1][1] == "X" && m[2][2] == "X"){
+            } else if(matriz[0][0] == "X" && matriz[1][0] == "X" && matriz[2][0] == "X"){
                 condVitoria01 = true;
-            } else if(m[2][0] == "X" && m[1][1] == "X" && m[0][2] == "X"){
+            } else if(matriz[0][1] == "X" && matriz[1][1] == "X" && matriz[2][1] == "X"){
+                condVitoria01 = true;
+            } else if(matriz[0][2] == "X" && matriz[1][2] == "X" && matriz[2][2] == "X"){
+                condVitoria01 = true;
+
+
+            } else if(matriz[0][0] == "X" && matriz[1][1] == "X" && matriz[2][2] == "X"){
+                condVitoria01 = true;
+            } else if(matriz[2][0] == "X" && matriz[1][1] == "X" && matriz[0][2] == "X"){
                 condVitoria01 = true;
             }
             return condVitoria01;
@@ -131,23 +170,23 @@ public void jogador02FazJogada(){
         public boolean vencedor02(){
 
 
-            if(m[0][0] == "O" && m[0][1] == "O" && m[0][2] == "O"){
+            if(matriz[0][0] == "O" && matriz[0][1] == "O" && matriz[0][2] == "O"){
                 condVitoria02 = true;
-            } else if(m[1][0] == "O" && m[1][1] == "O" && m[1][2] == "O"){
+            } else if(matriz[1][0] == "O" && matriz[1][1] == "O" && matriz[1][2] == "O"){
                 condVitoria02 = true;
-            } else if(m[2][0] == "O" && m[2][1] == "O" && m[2][2] == "O"){
-                condVitoria02 = true;
-
-            } else if(m[0][0] == "O" && m[1][0] == "O" && m[2][0] == "O"){
-                condVitoria02 = true;
-            } else if(m[0][1] == "O" && m[1][1] == "O" && m[2][1] == "O"){
-                condVitoria02 = true;
-            } else if(m[0][2] == "O" && m[1][2] == "O" && m[2][2] == "O"){
+            } else if(matriz[2][0] == "O" && matriz[2][1] == "O" && matriz[2][2] == "O"){
                 condVitoria02 = true;
 
-            } else if(m[0][0] == "O" && m[1][1] == "O" && m[2][2] == "O"){
+            } else if(matriz[0][0] == "O" && matriz[1][0] == "O" && matriz[2][0] == "O"){
                 condVitoria02 = true;
-            } else if(m[2][0] == "O" && m[1][1] == "O" && m[0][2] == "O"){
+            } else if(matriz[0][1] == "O" && matriz[1][1] == "O" && matriz[2][1] == "O"){
+                condVitoria02 = true;
+            } else if(matriz[0][2] == "O" && matriz[1][2] == "O" && matriz[2][2] == "O"){
+                condVitoria02 = true;
+
+            } else if(matriz[0][0] == "O" && matriz[1][1] == "O" && matriz[2][2] == "O"){
+                condVitoria02 = true;
+            } else if(matriz[2][0] == "O" && matriz[1][1] == "O" && matriz[0][2] == "O"){
                 condVitoria02 = true;
             }
             return condVitoria02;
