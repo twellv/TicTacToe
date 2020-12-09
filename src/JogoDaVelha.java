@@ -1,198 +1,137 @@
 import java.util.Scanner;
 
-public class JogoDaVelha extends Validacao{
+public class JogoDaVelha extends Validacao {
     Scanner teclado = new Scanner(System.in);
     String jogador1;
     String jogador2;
-    String jogadaRecebida;
 
-    private String[][] matriz = { {"1","2","3"}, {"4","5","6"},{"7","8","9"} };
+    private String[][] matriz = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
 
-        public String mostrar(){
+    public void mostrar() {
 
-            for(int linha = 0; linha < 3; linha++){
-                for(int coluna = 0; coluna < 3; coluna++){
+        for (int linha = 0; linha < 3; linha++) {
+            for (int coluna = 0; coluna < 3; coluna++) {
 
-                    System.out.printf("|");
-                    System.out.printf(matriz[linha][coluna]);
+                System.out.print("|");
+                System.out.print(matriz[linha][coluna]);
 
-                } System.out.printf("|");
-                System.out.println("\n" + "-------");
             }
-            return null;
+            System.out.print("|");
+            System.out.println("\n" + "-------");
         }
-    //----------------------------------------------------------
-    public void escolhaJogador(){
-     String pegarEscolha;
-     System.out.println("Jogador 1, vai jogar com [ X ] ou [ O ] ? ");
-     pegarEscolha = teclado.nextLine();
-      if(pegarEscolha.equals("X")){
-        jogador1 = "X";
-        jogador2 = "O";
-      } else if(pegarEscolha.equals("O")){
-          jogador1 = "O";
-          jogador2 = "X";
-      } else{
-          System.out.println("ESCOLHA INVALIDA!");
-          escolhaJogador();
-      }
     }
-    //----------------------------------------------------------
 
-        public void start(){
-            mostrar();
-            for(int i = 1; i < 3; i++){
-
-                do{
-                    jogador02FazJogada();
-                    validar();
-                    mostrar();
-
-
-
-                    jogador01FazJogada();
-                    validar();
-                    mostrar();
-
-                }while(vale != true || vale != true);
-            }
+    public void escolhaJogador() {
+        String pegarEscolha;
+        System.out.println("Jogador 1, vai jogar com [ X ] ou [ O ] ? ");
+        pegarEscolha = teclado.nextLine();
+        if (pegarEscolha.equals("X") || pegarEscolha.equals("x")) {
+            jogador1 = "X";
+            jogador2 = "O";
+        } else if (pegarEscolha.equals("O") || pegarEscolha.equals("o")) {
+            jogador1 = "O";
+            jogador2 = "X";
+        } else {
+            System.out.println("ESCOLHA INVALIDA!");
+            escolhaJogador();
         }
-//----------------------------------------------------------
+    }
 
-public Boolean permitirJogada(){
+    public void start() {
+        mostrar();
+        for (int i = 1; i < 3; i++) {
 
-    int jogadaInteira = Integer.parseInt(jogadaRecebida);
+            while (!verificarVencedor()) {
 
-    if(jogadaInteira > 0 && jogadaInteira < 10){
-        return true;
-    } else return false;
-
-}
-
-//----------------------------------------------------------
-public void jogador01FazJogada(){
-
-    System.out.println("JOGADOR 01 Faça sua jogada: ");
-    jogadaRecebida = teclado.nextLine();
-    permitirJogada();
-    System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
-
-    if(permitirJogada()){
-
-        System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
-
-        for (int co = 0; co < 3 ; co++){
-            for (int li = 0; li < 3; li++){
-                System.out.println(li);
-
-                if (jogadaRecebida.equals(matriz[li][co])){
-                    System.out.println(co +"COLUNA " +li+ " LINHA");
-                    matriz[li][co] = jogador1;
-                    System.out.println(co +"COLUNA " +li+ " LINHA");
-                }else{
-                    System.out.println("O valor do outro metodo é" + permitirJogada() + " esse valor ai ó");
-                    System.out.println("Ainda não deu certo, tenta de novo!!");
-                    //jogador01FazJogada();
+                if (!verificarVencedor()) {
+                    jogador01FazJogada();
+                    verificarVencedor();
+                    mostrar();
+                    if(verificarVencedor()){
+                        return;
+                    }
                 }
 
-
-            }
-        }
-
-
-
-    } else{
-        System.out.println("Ta errado, joga isso direito ¬¬ ");
-        jogador01FazJogada();
-    }
-System.out.println("JOGADOR 01 Jogou na casa numero: " + " " + "46 A ");
-}
-//----------------------------------------------------------
-public void jogador02FazJogada(){
-
-    System.out.println("JOGADOR 02 Faça sua jogada: ");
-    String jogada = teclado.nextLine();
-
-    for (int co = 0; co < 3 ; co++){
-        for (int li = 0; li < 3; li++){
-
-            if (jogada.equals(matriz[li][co])){
-                matriz[li][co] = jogador2;
-            } else{
-                System.out.println("Deu ruim.");
+                if (!verificarVencedor()) {
+                    jogador02FazJogada();
+                    verificarVencedor();
+                    mostrar();
+                    if(verificarVencedor()){
+                        return;
+                    }
+                }
             }
         }
     }
-    System.out.println("JOGADOR 02 Jogou na casa numero: " + " " + jogada);
-}
-//----------------------------------------------------------
 
-        boolean vale = false;
-        public boolean validar(){
+    public void jogador01FazJogada() {
 
-            if ( vencedor01() == true || vencedor02() == true){
-                vale = true;
+        System.out.println("JOGADOR 01, Jogue [" + jogador1 + "], Na posição : ");
+        String jogada = teclado.nextLine();
+        boolean valorLogicoTeste = false;
+
+        for (int li = 0; li < 3; li++) {
+            for (int co = 0; co < 3; co++) {
+                if (jogada.equals(matriz[li][co])) {
+                    matriz[li][co] = jogador1;
+                    valorLogicoTeste = true;
+                }
             }
-            return vale;
         }
-        //---------------------------------------------------------------
-        boolean condVitoria01 = false;
-        public boolean vencedor01(){
+        if (!valorLogicoTeste) {
+            System.out.println("Sua jogada não pode ser processada! Tente Novamente! ");
+            jogador01FazJogada();
+        } else {
+            System.out.println(" ( JOGADOR 01 Jogou: [" + jogador1 + "], na casa numero: " + " " + jogada + " )");
+        }
+    }
 
+    public void jogador02FazJogada() {
 
-            if(matriz[0][0] == "X" && matriz[0][1] == "X" && matriz[0][2] == "X"){
-                condVitoria01 = true;
-            } else if(matriz[1][0] == "X" && matriz[1][1] == "X" && matriz[1][2] == "X"){
-                condVitoria01 = true;
-            } else if(matriz[2][0] == "X" && matriz[2][1] == "X" && matriz[2][2] == "X"){
-                condVitoria01 = true;
+        System.out.println("JOGADOR 02, Jogue [" + jogador2 + "], Na posição : ");
+        String jogada = teclado.nextLine();
+        boolean valorLogicoTeste = false;
 
-
-            } else if(matriz[0][0] == "X" && matriz[1][0] == "X" && matriz[2][0] == "X"){
-                condVitoria01 = true;
-            } else if(matriz[0][1] == "X" && matriz[1][1] == "X" && matriz[2][1] == "X"){
-                condVitoria01 = true;
-            } else if(matriz[0][2] == "X" && matriz[1][2] == "X" && matriz[2][2] == "X"){
-                condVitoria01 = true;
-
-
-            } else if(matriz[0][0] == "X" && matriz[1][1] == "X" && matriz[2][2] == "X"){
-                condVitoria01 = true;
-            } else if(matriz[2][0] == "X" && matriz[1][1] == "X" && matriz[0][2] == "X"){
-                condVitoria01 = true;
+        for (int li = 0; li < 3; li++) {
+            for (int co = 0; co < 3; co++) {
+                if (jogada.equals(matriz[li][co])) {
+                    matriz[li][co] = jogador2;
+                    valorLogicoTeste = true;
+                }
             }
-            return condVitoria01;
         }
-
-        //----------------------------------------------------------------
-
-        boolean condVitoria02 = false;
-        public boolean vencedor02(){
-
-
-            if(matriz[0][0] == "O" && matriz[0][1] == "O" && matriz[0][2] == "O"){
-                condVitoria02 = true;
-            } else if(matriz[1][0] == "O" && matriz[1][1] == "O" && matriz[1][2] == "O"){
-                condVitoria02 = true;
-            } else if(matriz[2][0] == "O" && matriz[2][1] == "O" && matriz[2][2] == "O"){
-                condVitoria02 = true;
-
-            } else if(matriz[0][0] == "O" && matriz[1][0] == "O" && matriz[2][0] == "O"){
-                condVitoria02 = true;
-            } else if(matriz[0][1] == "O" && matriz[1][1] == "O" && matriz[2][1] == "O"){
-                condVitoria02 = true;
-            } else if(matriz[0][2] == "O" && matriz[1][2] == "O" && matriz[2][2] == "O"){
-                condVitoria02 = true;
-
-            } else if(matriz[0][0] == "O" && matriz[1][1] == "O" && matriz[2][2] == "O"){
-                condVitoria02 = true;
-            } else if(matriz[2][0] == "O" && matriz[1][1] == "O" && matriz[0][2] == "O"){
-                condVitoria02 = true;
-            }
-            return condVitoria02;
+        if (!valorLogicoTeste) {
+            System.out.println("Sua jogada não pode ser processada! Tente Novamente! ");
+            jogador02FazJogada();
+        } else {
+            System.out.println(" ( JOGADOR 02 Jogou: [" + jogador2 + "], na casa numero: " + " " + jogada + " )");
         }
+    }
 
 
+    public boolean verificarVencedor() {
+        boolean condVitoria = false;
 
+        if (matriz[0][0].equals(matriz[0][1]) && matriz[0][1].equals(matriz[0][2])) {
+            condVitoria = true;
+        } else if (matriz[1][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[1][2])) {
+            condVitoria = true;
+        } else if (matriz[2][0].equals(matriz[2][1]) && matriz[2][1].equals(matriz[2][2])) {
+            condVitoria = true;
+
+        } else if (matriz[0][0].equals(matriz[1][0]) && matriz[1][0].equals(matriz[2][0])) {
+            condVitoria = true;
+        } else if (matriz[0][1].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][1])) {
+            condVitoria = true;
+        } else if (matriz[0][2].equals(matriz[1][2]) && matriz[1][2].equals(matriz[2][2])) {
+            condVitoria = true;
+
+        } else if (matriz[0][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][2])) {
+            condVitoria = true;
+        } else if (matriz[2][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[0][2])) {
+            condVitoria = true;
+        }
+        return condVitoria;
+    }
 
 }
