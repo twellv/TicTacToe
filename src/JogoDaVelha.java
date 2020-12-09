@@ -48,6 +48,7 @@ public class JogoDaVelha extends Validacao {
                     verificarVencedor();
                     mostrar();
                     if(verificarVencedor()){
+                        System.out.println("PARABENS, ["+jogador1+"] VOCE VENCEU!");
                         return;
                     }
                 }
@@ -57,6 +58,7 @@ public class JogoDaVelha extends Validacao {
                     verificarVencedor();
                     mostrar();
                     if(verificarVencedor()){
+                        System.out.println("PARABENS, ["+jogador2+"] VOCE VENCEU!");
                         return;
                     }
                 }
