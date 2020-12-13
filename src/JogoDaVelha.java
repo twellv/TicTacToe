@@ -4,6 +4,9 @@ public class JogoDaVelha extends Validacao {
     Scanner teclado = new Scanner(System.in);
     String jogador1;
     String jogador2;
+    int contadorGeral=0;
+    boolean condVitoria = false;
+
 
     private String[][] matriz = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
 
@@ -25,7 +28,7 @@ public class JogoDaVelha extends Validacao {
         String pegarEscolha;
         System.out.println("Jogador 1, vai jogar com [ X ] ou [ O ] ? ");
         pegarEscolha = teclado.nextLine();
-        if (pegarEscolha.equals("X") || pegarEscolha.equals("x")) {
+        if (pegarEscolha.equalsIgnoreCase("X")) {
             jogador1 = "X";
             jogador2 = "O";
         } else if (pegarEscolha.equals("O") || pegarEscolha.equals("o")) {
@@ -51,6 +54,12 @@ public class JogoDaVelha extends Validacao {
                         System.out.println("PARABENS, ["+jogador1+"] VOCE VENCEU!");
                         return;
                     }
+
+                    verificarEmpate();
+                    if(verificarEmpate()){
+                        System.out.println("DEU EMPATE NESSA XIBATA!!");
+                        return;
+                    }
                 }
 
                 if (!verificarVencedor()) {
@@ -59,6 +68,12 @@ public class JogoDaVelha extends Validacao {
                     mostrar();
                     if(verificarVencedor()){
                         System.out.println("PARABENS, ["+jogador2+"] VOCE VENCEU!");
+                        return;
+                    }
+
+                    verificarEmpate();
+                    if(verificarEmpate()){
+                        System.out.println("DEU EMPATE NESSA XIBATA!!");
                         return;
                     }
                 }
@@ -77,6 +92,7 @@ public class JogoDaVelha extends Validacao {
                 if (jogada.equals(matriz[li][co])) {
                     matriz[li][co] = jogador1;
                     valorLogicoTeste = true;
+                    contadorGeral += 1;
                 }
             }
         }
@@ -99,6 +115,7 @@ public class JogoDaVelha extends Validacao {
                 if (jogada.equals(matriz[li][co])) {
                     matriz[li][co] = jogador2;
                     valorLogicoTeste = true;
+                    contadorGeral += 1;
                 }
             }
         }
@@ -110,10 +127,7 @@ public class JogoDaVelha extends Validacao {
         }
     }
 
-
     public boolean verificarVencedor() {
-        boolean condVitoria = false;
-
         if (matriz[0][0].equals(matriz[0][1]) && matriz[0][1].equals(matriz[0][2])) {
             condVitoria = true;
         } else if (matriz[1][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[1][2])) {
@@ -134,6 +148,12 @@ public class JogoDaVelha extends Validacao {
             condVitoria = true;
         }
         return condVitoria;
+    }
+
+    public boolean verificarEmpate(){
+        if(contadorGeral > 6){
+            condVitoria = true;
+        }return condVitoria;
     }
 
 }
