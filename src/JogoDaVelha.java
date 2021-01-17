@@ -1,14 +1,13 @@
 import java.util.Scanner;
 
-public class JogoDaVelha extends Validacao {
+public class JogoDaVelha {
     Scanner teclado = new Scanner(System.in);
     String jogador1;
     String jogador2;
-    int contadorGeral=0;
+    int contadorGeral = 0;
     boolean condVitoria = false;
 
-
-    private String[][] matriz = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
+    public static String[][] matriz = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
 
     public void mostrar() {
 
@@ -50,14 +49,14 @@ public class JogoDaVelha extends Validacao {
                     jogador01FazJogada();
                     verificarVencedor();
                     mostrar();
-                    if(verificarVencedor()){
-                        System.out.println("PARABENS, ["+jogador1+"] VOCE VENCEU!");
+                    if (verificarVencedor()) {
+                        System.out.println("PARABENS, [" + jogador1 + "] VOCE VENCEU!");
                         return;
                     }
 
                     verificarEmpate();
-                    if(verificarEmpate()){
-                        System.out.println("DEU EMPATE NESSA XIBATA!!");
+                    if (verificarEmpate()) {
+                        System.out.println("DEU EMPATE ( -.-' ) ");
                         return;
                     }
                 }
@@ -66,13 +65,13 @@ public class JogoDaVelha extends Validacao {
                     jogador02FazJogada();
                     verificarVencedor();
                     mostrar();
-                    if(verificarVencedor()){
-                        System.out.println("PARABENS, ["+jogador2+"] VOCE VENCEU!");
+                    if (verificarVencedor()) {
+                        System.out.println("PARABENS, [" + jogador2 + "] VOCE VENCEU!");
                         return;
                     }
 
                     verificarEmpate();
-                    if(verificarEmpate()){
+                    if (verificarEmpate()) {
                         System.out.println("DEU EMPATE NESSA XIBATA!!");
                         return;
                     }
@@ -150,10 +149,11 @@ public class JogoDaVelha extends Validacao {
         return condVitoria;
     }
 
-    public boolean verificarEmpate(){
-        if(contadorGeral > 6){
+    public boolean verificarEmpate() {
+        if (contadorGeral > 6) {
             condVitoria = true;
-        }return condVitoria;
+        }
+        return condVitoria;
     }
 
 }
