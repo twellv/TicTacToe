@@ -72,7 +72,7 @@ public class JogoDaVelha {
 
                     verificarEmpate();
                     if (verificarEmpate()) {
-                        System.out.println("DEU EMPATE NESSA XIBATA!!");
+                        System.out.println("DEU EMPATE NESSA ( -.-' )");
                         return;
                     }
                 }
