@@ -30,10 +30,10 @@ public class JogoDaVelha{
         String pegarEscolha;
         System.out.println("Jogador 1, vai jogar com [ X ] ou [ O ] ? ");
         pegarEscolha = teclado.nextLine();
-        if (pegarEscolha.equalsIgnoreCase("X")) {
+        if (pegarEscolha.equalsIgnoreCase("X")){
             jogador1 = "X";
             jogador2 = "O";
-        } else if (pegarEscolha.equalsIgnoreCase("O")) {
+        } else if (pegarEscolha.equalsIgnoreCase("O")){
             jogador1 = "O";
             jogador2 = "X";
         } else {
@@ -53,7 +53,7 @@ public class JogoDaVelha{
         System.out.println("JOGADOR 01, Jogue [" + jogador1 + "], Na posição : ");
         String jogada = teclado.nextLine();
         boolean valorLogico = false;
-
+        
         for (int li = 0; li < 3; li++){
             for (int co = 0; co < 3; co++){
                 if (jogada.equals(matriz[li][co])){
@@ -110,30 +110,30 @@ public class JogoDaVelha{
     }
 
     public boolean verificarVencedor(){
-        if (matriz[0][0].equals(matriz[0][1]) && matriz[0][1].equals(matriz[0][2])) {
+        if (matriz[0][0].equals(matriz[0][1]) && matriz[0][1].equals(matriz[0][2])){
             condVitoria = true;
-        } else if (matriz[1][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[1][2])) {
+        } else if (matriz[1][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[1][2])){
             condVitoria = true;
-        } else if (matriz[2][0].equals(matriz[2][1]) && matriz[2][1].equals(matriz[2][2])) {
-            condVitoria = true;
-
-        } else if (matriz[0][0].equals(matriz[1][0]) && matriz[1][0].equals(matriz[2][0])) {
-            condVitoria = true;
-        } else if (matriz[0][1].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][1])) {
-            condVitoria = true;
-        } else if (matriz[0][2].equals(matriz[1][2]) && matriz[1][2].equals(matriz[2][2])) {
+        } else if (matriz[2][0].equals(matriz[2][1]) && matriz[2][1].equals(matriz[2][2])){
             condVitoria = true;
 
-        } else if (matriz[0][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][2])) {
+        } else if (matriz[0][0].equals(matriz[1][0]) && matriz[1][0].equals(matriz[2][0])){
             condVitoria = true;
-        } else if (matriz[2][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[0][2])) {
+        } else if (matriz[0][1].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][1])){
+            condVitoria = true;
+        } else if (matriz[0][2].equals(matriz[1][2]) && matriz[1][2].equals(matriz[2][2])){
+            condVitoria = true;
+
+        } else if (matriz[0][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[2][2])){
+            condVitoria = true;
+        } else if (matriz[2][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[0][2])){
             condVitoria = true;
         }
         return condVitoria;
     }
 
     public boolean verificarEmpate(){
-        if (contadorRodadas >= 9) {
+        if (contadorRodadas >= 9){
             condVitoria = true;
             System.out.println(" < E M P A T E >  (-.-')");
             System.exit(1);
