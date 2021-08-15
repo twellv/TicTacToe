@@ -10,8 +10,8 @@ public class JogoDaVelha{
     boolean condVitoria = false;
 
     public static String[][] matriz ={  {"1", "2", "3"},
-            {"4", "5", "6"},
-            {"7", "8", "9"}};
+                                        {"4", "5", "6"},
+                                        {"7", "8", "9"}};
 
     public void mostrar(){
         for (int linha = 0; linha < 3; linha++){
