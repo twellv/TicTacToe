@@ -2,20 +2,20 @@ package main;
 
 import java.util.Scanner;
 
-public class JogoDaVelha {
+public class JogoDaVelha{
     Scanner teclado = new Scanner(System.in);
     String jogador1;
     String jogador2;
-    int contadorGeral = 0;
+    int contadorRodadas = 0;
     boolean condVitoria = false;
 
-    public static String[][] matriz = { {"1", "2", "3"},
-                                        {"4", "5", "6"},
-                                        {"7", "8", "9"}};
+    public static String[][] matriz ={  {"1", "2", "3"},
+            {"4", "5", "6"},
+            {"7", "8", "9"}};
 
-    public void mostrar() {
-        for (int linha = 0; linha < 3; linha++) {
-            for (int coluna = 0; coluna < 3; coluna++) {
+    public void mostrar(){
+        for (int linha = 0; linha < 3; linha++){
+            for (int coluna = 0; coluna < 3; coluna++){
 
                 System.out.print("|");
                 System.out.print(matriz[linha][coluna]);
@@ -26,14 +26,14 @@ public class JogoDaVelha {
         }
     }
 
-    public void escolhaJogador() {
+    public void escolhaJogador(){
         String pegarEscolha;
         System.out.println("Jogador 1, vai jogar com [ X ] ou [ O ] ? ");
         pegarEscolha = teclado.nextLine();
         if (pegarEscolha.equalsIgnoreCase("X")) {
             jogador1 = "X";
             jogador2 = "O";
-        } else if (pegarEscolha.equals("O") || pegarEscolha.equals("o")) {
+        } else if (pegarEscolha.equalsIgnoreCase("O")) {
             jogador1 = "O";
             jogador2 = "X";
         } else {
@@ -43,93 +43,73 @@ public class JogoDaVelha {
     }
 
     public void start() {
-        mostrar();
-        for (int i = 1; i < 3; i++) {
-
-            while (!verificarVencedor()) {
-
-                if (!verificarVencedor()) {
-                    jogador01FazJogada();
-                    verificarVencedor();
-                    mostrar();
-                    if (verificarVencedor()) {
-                        System.out.println("PARABENS, [" + jogador1 + "] VOCE VENCEU!");
-                        return;
-                    }
-
-                    verificarEmpate();
-                    if (verificarEmpate()) {
-                        System.out.println("DEU EMPATE ( -.-' ) ");
-                        return;
-                    }
-                }
-
-                if (!verificarVencedor()) {
-                    jogador02FazJogada();
-                    verificarVencedor();
-                    mostrar();
-                    if (verificarVencedor()) {
-                        System.out.println("PARABENS, [" + jogador2 + "] VOCE VENCEU!");
-                        return;
-                    }
-
-                    verificarEmpate();
-                    if (verificarEmpate()) {
-                        System.out.println("DEU EMPATE NESSA ( -.-' )");
-                        return;
-                    }
-                }
-            }
+        while(contadorRodadas != 9){
+            jogador01FazJogada();
+            jogador02FazJogada();
         }
     }
 
-    public void jogador01FazJogada() {
-
+    public void jogador01FazJogada(){
         System.out.println("JOGADOR 01, Jogue [" + jogador1 + "], Na posição : ");
         String jogada = teclado.nextLine();
-        boolean valorLogicoTeste = false;
+        boolean valorLogico = false;
 
-        for (int li = 0; li < 3; li++) {
-            for (int co = 0; co < 3; co++) {
-                if (jogada.equals(matriz[li][co])) {
+        for (int li = 0; li < 3; li++){
+            for (int co = 0; co < 3; co++){
+                if (jogada.equals(matriz[li][co])){
                     matriz[li][co] = jogador1;
-                    valorLogicoTeste = true;
-                    contadorGeral += 1;
+                    valorLogico = true;
                 }
             }
         }
-        if (!valorLogicoTeste) {
-            System.out.println("Sua jogada não pode ser processada! Tente Novamente! ");
+        mostrar();
+        if(valorLogico){
+            System.out.println(jogador1+" na posição "+jogada);
+            contadorRodadas +=1;
+            System.out.println(contadorRodadas);
+        } else{
+            System.out.println("jogada invalida! tente novamente! ");
             jogador01FazJogada();
-        } else {
-            System.out.println(" ( JOGADOR 01 Jogou: [" + jogador1 + "], na casa numero: " + " " + jogada + " )");
         }
+
+        if(verificarVencedor()){
+            System.out.println("voce venceu!!! ");
+            System.exit(1);
+        }
+        verificarEmpate();
     }
 
-    public void jogador02FazJogada() {
-
+    public void jogador02FazJogada(){
         System.out.println("JOGADOR 02, Jogue [" + jogador2 + "], Na posição : ");
         String jogada = teclado.nextLine();
-        boolean valorLogicoTeste = false;
+        boolean valorLogico = false;
 
-        for (int li = 0; li < 3; li++) {
-            for (int co = 0; co < 3; co++) {
-                if (jogada.equals(matriz[li][co])) {
+        for (int li = 0; li < 3; li++){
+            for (int co = 0; co < 3; co++){
+                if (jogada.equals(matriz[li][co])){
                     matriz[li][co] = jogador2;
-                    valorLogicoTeste = true;
-                    contadorGeral += 1;
+                    valorLogico = true;
                 }
             }
         }
-        if (!valorLogicoTeste) {
-            System.out.println("Sua jogada não pode ser processada! Tente Novamente! ");
+        mostrar();
+        if(valorLogico){
+            System.out.println(jogador2+" na posição "+jogada);
+            contadorRodadas +=1;
+            System.out.println(contadorRodadas);
+        } else{
+            System.out.println("jogada invalida! tente novamente! ");
             jogador02FazJogada();
-        } else {
-            System.out.println(" ( JOGADOR 02 Jogou: [" + jogador2 + "], na casa numero: " + " " + jogada + " )");
         }
+
+        if(verificarVencedor()){
+            System.out.println("voce venceu!!! ");
+            System.exit(1);
+        }
+        verificarEmpate();
     }
 
-    public boolean verificarVencedor() {
+    public boolean verificarVencedor(){
         if (matriz[0][0].equals(matriz[0][1]) && matriz[0][1].equals(matriz[0][2])) {
             condVitoria = true;
         } else if (matriz[1][0].equals(matriz[1][1]) && matriz[1][1].equals(matriz[1][2])) {
@@ -152,13 +132,12 @@ public class JogoDaVelha {
         return condVitoria;
     }
 
-
-
-    public boolean verificarEmpate() {
-        if (contadorGeral > 6) {
+    public boolean verificarEmpate(){
+        if (contadorRodadas >= 9) {
             condVitoria = true;
+            System.out.println(" < E M P A T E >  (-.-')");
+            System.exit(1);
         }
         return condVitoria;
     }
-
 }

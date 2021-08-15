@@ -5,6 +5,7 @@ public class Main {
 
     JogoDaVelha jogo1 = new JogoDaVelha();
     jogo1.escolhaJogador();
+    jogo1.mostrar();
     jogo1.start();
 
  }
