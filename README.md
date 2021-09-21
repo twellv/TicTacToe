@@ -1,4 +1,2 @@
-# Jogo Da Velha
- 
-- Jogo simples e rápido, modalidade 1x1 multplayer. 
-- Apenas uma classe.
+# Simple TicTacToe Game
+by Wellington "Twellv" Araujo
